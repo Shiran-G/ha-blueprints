@@ -1,0 +1,39 @@
+alias: Dishwasher Progress
+description: Displays current program phase and percentage for Home Connect dishwashers
+triggers:
+  - trigger: state
+    entity_id:
+      - sensor.bosch_dishwasher_program_progress
+    enabled: true
+conditions: []
+actions:
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.bosch_dishwasher_door
+            state:
+              - "off"
+        sequence:
+          - action: awtrix.custom_app
+            metadata: {}
+            data:
+              device: <Your Awtrix device>
+              app: Dishwasher
+              text: >-
+                {{ states('sensor.bosch_dishwasher_program_phase') }} - {{
+                states('sensor.bosch_dishwasher_program_progress')}}%
+              icon: "61039"
+            enabled: true
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.bosch_dishwasher_door
+            state:
+              - "on"
+        sequence:
+          - action: awtrix.delete_custom_app
+            metadata: {}
+            data:
+              device: <Your Awtrix device>
+              app: Dishwasher
+            enabled: true
+mode: single

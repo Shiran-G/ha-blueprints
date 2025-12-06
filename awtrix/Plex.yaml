@@ -1,5 +1,5 @@
-alias: Plex Stream counter, using Tautilli
-description: ""
+alias: Plex Streams
+description: "Plex active stream counter, using Tautilli"
 triggers:
   - trigger: state
     entity_id:
@@ -25,7 +25,7 @@ actions:
           - action: awtrix.custom_app
             metadata: {}
             data:
-              device: 917a42e5ab6c0eacd00927d3312fc237
+              device: <Your Awtrix device>
               app: Plex streams
               text: "{{ states('sensor.tautulli_watching') }}"
               icon: "15185"
@@ -37,6 +37,6 @@ actions:
           - action: awtrix.delete_custom_app
             metadata: {}
             data:
-              device: 917a42e5ab6c0eacd00927d3312fc237
+              device: <Your Awtrix device>
               app: Plex streams
 mode: single

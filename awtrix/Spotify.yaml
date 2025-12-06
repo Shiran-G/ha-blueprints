@@ -2,14 +2,14 @@ alias: Awtrix Notification Spotify by Zoker
 description: Based on the Spotify Song Notification Flow by Zoker
 triggers:
   - entity_id:
-      - media_player.spotify_shiran_g
+      - media_player.spotify
     trigger: state
 conditions: []
 actions:
   - choose:
       - conditions:
           - condition: state
-            entity_id: media_player.spotify_shiran_g
+            entity_id: media_player.spotify
             state:
               - idle
               - paused
@@ -17,24 +17,24 @@ actions:
           - action: awtrix.delete_custom_app
             metadata: {}
             data:
-              device: 917a42e5ab6c0eacd00927d3312fc237
+              device: <Your Awtrix device>
               app: Spotify
       - conditions:
           - condition: state
-            entity_id: media_player.spotify_shiran_g
+            entity_id: media_player.spotify
             state:
               - playing
         sequence:
           - action: awtrix.custom_app
             metadata: {}
             data:
-              device: 917a42e5ab6c0eacd00927d3312fc237
+              device: <Your Awtrix device>
               app: Spotify
               icon: "43961"
               text: >-
-                {{states.media_player.spotify_shiran_g.attributes.media_artist}}
+                {{states.media_player.spotify.attributes.media_artist}}
                 -
-                {{states.media_player.spotify_shiran_g.attributes.media_title}}
+                {{states.media_player.spotify.attributes.media_title}}
               pushIcon: "0"
               duration: 10
             enabled: true
