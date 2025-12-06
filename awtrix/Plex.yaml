@@ -1,0 +1,42 @@
+alias: Plex Stream counter, using Tautilli
+description: ""
+triggers:
+  - trigger: state
+    entity_id:
+      - sensor.tautulli_watching
+    id: plex-status
+    enabled: false
+  - trigger: template
+    value_template: |
+      {{ states('sensor.tautulli_watching') >= '1'  }}
+    id: plex-active
+  - trigger: template
+    value_template: |
+      {{ states('sensor.tautulli_watching') == '0'  }}
+    id: plex-inactive
+conditions: []
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id:
+              - plex-active
+        sequence:
+          - action: awtrix.custom_app
+            metadata: {}
+            data:
+              device: 917a42e5ab6c0eacd00927d3312fc237
+              app: Plex streams
+              text: "{{ states('sensor.tautulli_watching') }}"
+              icon: "15185"
+      - conditions:
+          - condition: trigger
+            id:
+              - plex-inactive
+        sequence:
+          - action: awtrix.delete_custom_app
+            metadata: {}
+            data:
+              device: 917a42e5ab6c0eacd00927d3312fc237
+              app: Plex streams
+mode: single

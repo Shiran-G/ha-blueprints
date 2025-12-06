@@ -1,2 +1,2 @@
 # ha-blueprints
-Blueprints I use for Home Assistant
+Blueprints I use for Home Assistant.
